@@ -20,3 +20,4 @@ Easy-to-use webserver with Markdown.
 - SSL-Certificate
 - Other files than .md
 - Support HTML-Files
+- Sub-Folders
