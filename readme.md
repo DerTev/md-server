@@ -19,3 +19,4 @@ Easy-to-use webserver with Markdown.
 - Change font (?)
 - SSL-Certificate
 - Other files than .md
+- Support HTML-Files
