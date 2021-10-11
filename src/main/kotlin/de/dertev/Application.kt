@@ -12,8 +12,13 @@ fun main() {
     var host = ""
     val config = File("config.yml")
 
-    if (!(File("pages/").exists())) {
-        File("pages/").mkdir()
+    if (!(File("files/").exists())) {
+        File("files/").mkdir()
+    }
+
+    if (!(File("files/style.css").exists())) {
+        File("files/style.css").createNewFile()
+        File("files/style.css").writeText(getExampleCSS())
     }
 
     if (!(config.exists())) {

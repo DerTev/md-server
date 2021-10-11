@@ -12,12 +12,10 @@ Easy-to-use webserver with Markdown.
 ## Setup
 1. Download jar from the latest release
 2. ```java -jar md-server.jar```
-3. Edit ``config.yml`` & create Markdown-Files in ``pages/``
+3. Edit ``config.yml`` & create Markdown- and other Files in ``files/``
 
 ## To-Do's
-- Center adjustable
-- Change font (?)
 - SSL-Certificate
-- Other files than .md
-- Support HTML-Files
-- Sub-Folders
+- [Request-Bug](https://github.com/DerTev/md-server/issues/1)
+
+**Wiki coming soon** 

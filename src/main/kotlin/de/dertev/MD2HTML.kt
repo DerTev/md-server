@@ -13,6 +13,8 @@ class MD2HTML(target: File) {
         val flavour = CommonMarkFlavourDescriptor()
         val parsedTree = MarkdownParser(flavour).buildMarkdownTreeFromString(src)
         val html = HtmlGenerator(src, parsedTree, flavour).generateHtml()
-        return "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>${file.name}</title><link href=\"static/style.css\", rel=\"stylesheet\"></head>$html</html>"
+        var title = file.name.split("|")
+        title = listOf(title[title.size-1])
+        return "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>${title}</title><link href=\"/style.css\", rel=\"stylesheet\"></head>$html</html>"
     }
 }
