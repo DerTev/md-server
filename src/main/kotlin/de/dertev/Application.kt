@@ -8,7 +8,7 @@ import java.nio.file.Paths
 
 fun main() {
 
-    var port = 8080
+    var port = 80
     var host = ""
     val config = File("config.yml")
 
@@ -23,7 +23,7 @@ fun main() {
 
     if (!(config.exists())) {
         config.createNewFile()
-        config.writeText("port: 8080\nhost: localhost")
+        config.writeText("port: 80\nhost: localhost")
     }
 
     config.forEachLine {
