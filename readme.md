@@ -19,3 +19,4 @@ Easy-to-use webserver with Markdown.
 - [Request-Bug](https://github.com/DerTev/md-server/issues/1)
 
 **Wiki coming soon** 
+**We recommend using a [reversed proxy](https://www.ionos.de/digitalguide/server/knowhow/was-ist-ein-reverse-proxy/)!**
