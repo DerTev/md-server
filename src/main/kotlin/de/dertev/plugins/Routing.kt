@@ -14,7 +14,6 @@ import java.io.File
 import java.nio.file.Paths
 
 fun Application.configureRouting() {
-
     routing {
         File("files/").walkTopDown().forEach { file ->
             if (file.name.endsWith(".md")) {
