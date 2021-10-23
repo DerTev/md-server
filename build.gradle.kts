@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "de.dertev"
-version = "beta-2"
+version = "beta-3"
 application {
     mainClass.set("de.dertev.ApplicationKt")
 }

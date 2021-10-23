@@ -4,35 +4,26 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import de.dertev.plugins.*
 import java.io.File
-import java.nio.file.Paths
 
 fun main() {
+    val config = FileManager(File("config.yml"))
 
-    var port = 80
-    var host = ""
-    val config = File("config.yml")
+    FileManager(File("files/")).createDir()
 
-    if (!(File("files/").exists())) {
-        File("files/").mkdir()
+
+    val cssFile = FileManager(File("files/style.css"))
+    if (!cssFile.file.exists()) {
+        cssFile.createFile()
+        cssFile.write(getExampleCSS())
     }
 
-    if (!(File("files/style.css").exists())) {
-        File("files/style.css").createNewFile()
-        File("files/style.css").writeText(getExampleCSS())
+    if (!config.file.exists()) {
+        config.createFile()
+        config.write("port: 80\nhost: localhost")
     }
 
-    if (!(config.exists())) {
-        config.createNewFile()
-        config.writeText("port: 80\nhost: localhost")
-    }
-
-    config.forEachLine {
-        if (it.startsWith("port: ")) {
-            port = it.replaceFirst("port: ", "").toInt()
-        } else if (it.startsWith("host: ")) {
-            host = it.replaceFirst("host: ", "")
-        }
-    }
+    val port = config.getYMLData("port").toInt()
+    val host = config.getYMLData("host")
 
     embeddedServer(Netty, port = port, host = host) {
         configureRouting()
