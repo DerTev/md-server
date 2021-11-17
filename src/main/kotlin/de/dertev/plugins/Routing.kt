@@ -4,38 +4,32 @@ import de.dertev.FileManager
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.application.*
+import io.ktor.request.*
 import io.ktor.response.*
 import java.io.File
 
 fun Application.configureRouting() {
     routing {
-        File("files/").walkTopDown().forEach { file ->
-
-            if (file.name.endsWith(".md")) {
-                if (file.name == "index.md") {
-                    get("/") {
-                        call.respondText(FileManager(file).md2HTML(), ContentType.Text.Html)
-                    }
+        get("/{...}/") {
+            var currentPath = call.request.path().dropLast(1)
+            if (call.request.path() == "/") {
+                call.respondText(FileManager(File("files/index.md")).md2HTML(), ContentType.Text.Html)
+            } else if (currentPath == "/style.css") {
+                call.respondText(File("style.css").readText(), ContentType.Text.CSS)
+            } else if (File("files${currentPath}.md").exists()) {
+                call.respondText(FileManager(File("files${currentPath}.md")).md2HTML(), ContentType.Text.Html)
+            } else if (File("files${currentPath}").exists()) {
+                if (File("files${currentPath}").isDirectory) {
+                    call.respondText(File("404.html").readText(), ContentType.Text.Html)
                 } else {
-                    get("/${(file.name.replace(".md", "")).replace("|", "/")}") {
-                        call.respondText(FileManager(file).md2HTML(), ContentType.Text.Html)
-                    }
-                }
-            } else if (file.name.endsWith(".html")) {
-                if (file.name == "index.html") {
-                    get("/") {
-                        call.respondText(file.readText(), ContentType.Text.Html)
-                    }
-                } else {
-                    get("/${(file.name.replace(".html", "")).replace("|", "/")}") {
-                        call.respondText(file.readText(), ContentType.Text.Html)
-                    }
+                    call.respondFile(File("files${currentPath}"))
                 }
             } else {
-                get("/${file.name.replace("|", "/")}") {
-                    call.respondText(file.readText(), ContentType.Any)
-                }
+                call.respondText(File("404.html").readText(), ContentType.Text.Html)
             }
+        }
+        get("/{...}") {
+            call.respondRedirect(call.request.path() + "/", permanent = false)
         }
     }
 }
