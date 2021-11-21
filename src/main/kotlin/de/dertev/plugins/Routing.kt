@@ -25,7 +25,7 @@ fun Application.configureRouting() {
                     call.respondFile(File("files${currentPath}"))
                 }
             } else {
-                call.respondText(File("404.html").readText(), ContentType.Text.Html)
+                call.respondText(File("404.html").readText(), ContentType.Text.Html, HttpStatusCode.NotFound)
             }
         }
         get("/{...}") {
