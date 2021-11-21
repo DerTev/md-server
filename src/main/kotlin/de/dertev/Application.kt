@@ -8,7 +8,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
 
-val configFile = FileManager(File("config.json"), Json.encodeToString(hashMapOf("port" to "80", "host" to "localhost", "navbar" to true, "robots-index" to true, "robots-follow" to true)))
+val configFile = FileManager(File("config.json"), Json.encodeToString(hashMapOf("port" to "80", "host" to "localhost", "navbar" to "true", "robots-index" to "true", "robots-follow" to "true")))
 
 fun main() {
 
