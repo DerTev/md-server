@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "de.dertev"
-version = "1.0.0"
+version = "1.0.1"
 application {
     mainClass.set("de.dertev.ApplicationKt")
 }
