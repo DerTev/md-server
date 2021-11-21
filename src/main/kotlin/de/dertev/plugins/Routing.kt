@@ -11,7 +11,7 @@ import java.io.File
 fun Application.configureRouting() {
     routing {
         get("/{...}/") {
-            var currentPath = call.request.path().dropLast(1)
+            val currentPath = call.request.path().dropLast(1)
             if (call.request.path() == "/") {
                 call.respondText(FileManager(File("files/index.md")).md2HTML(), ContentType.Text.Html)
             } else if (currentPath == "/style.css") {
