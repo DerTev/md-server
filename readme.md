@@ -9,3 +9,4 @@
 - [ ] Multiple domains
 - [ ] A nicer ReadMe
 - [ ] SSL (?)
+- [ ] CLI
