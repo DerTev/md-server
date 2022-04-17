@@ -8,3 +8,4 @@
 - [ ] Blog-System
 - [ ] Multiple domains
 - [ ] A nicer ReadMe
+- [ ] SSL (?)
