@@ -1,0 +1,10 @@
+# TODO
+- [ ] Serve Markdown-Files
+- [ ] Config (yml, json or toml)
+- [ ] Serve other Files than Markdown
+- [ ] Redirect
+- [ ] Dashboard (?)
+- [ ] Some nice CSS
+- [ ] Blog-System
+- [ ] Multiple domains
+- [ ] A nicer ReadMe
