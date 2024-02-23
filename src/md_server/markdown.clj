@@ -3,7 +3,8 @@
             [hiccup2.core :as hiccup]))
 
 (defn- apply-html-structure [body]
-  (str (hiccup/html [:html [:head [:title "md-server"]]     ; TODO change title
+  (str (hiccup/html [:html [:head [:title "md-server"]      ; TODO change title
+                            [:link {:rel "stylesheet" :href "/style.css"}]]
                      [:body body]])))
 
 (defn md->response [markdown]

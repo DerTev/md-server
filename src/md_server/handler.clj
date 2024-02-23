@@ -17,9 +17,14 @@
 
 (defn handle [req]
   (let [uri (:uri req)]
-    (or (md-response (str uri ".md"))
-        (md-response (str uri "/index.md"))
-        (when (cstr/ends-with? uri ".md")
-          (md-response uri))
-        {:body   "404 - Not found!"
-         :status 404})))
+    (condp contains? uri
+      #{"/style.css"} {:body   (slurp "https://cdn.jsdelivr.net/npm/water.css@2/out/water.css")
+                       :status 200}
+      #{"/sitemap" "/sitemap/"} {:body   "Sitemap coming soon..."
+                                 :status 404}
+      (or (md-response (str uri ".md"))
+          (md-response (str uri "/index.md"))
+          (when (cstr/ends-with? uri ".md")
+            (md-response uri))
+          {:body   "404 - Not found!"
+           :status 404}))))
