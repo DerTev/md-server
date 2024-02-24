@@ -25,5 +25,6 @@
   ([path] (render-content path "content/"))
   ([path root] (let [md (path->md (str root path))]
                  (when (some? md)
-                   {:body   md
-                    :status 200}))))
+                   {:body    md
+                    :headers {"Content-Type" "text/html"}
+                    :status  200}))))
