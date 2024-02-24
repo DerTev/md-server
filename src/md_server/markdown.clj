@@ -1,16 +1,29 @@
 (ns md-server.markdown
-  (:require [cybermonday.core :as md]
-            [hiccup2.core :as hiccup]))
+  (:require [clojure.java.io :as jio]
+            [cybermonday.core :as md]
+            [md-server.html :as html]))
 
-(defn- apply-html-structure [body]
-  (str (hiccup/html [:html [:head [:title "md-server"]      ; TODO change title
-                            [:link {:rel "stylesheet" :href "/style.css"}]]
-                     [:body body]])))
+(defn- read-file [path]
+  (let [file (jio/file path)]
+    (when (and (.exists file)
+               (.isFile file))
+      (slurp file))))
 
-(defn md->response [markdown]
+(defn md->html [markdown]
   (when (some? markdown)
-    {:body   (-> markdown
-                 md/parse-md
-                 :body
-                 apply-html-structure)
-     :status 200}))
+    (-> markdown
+        md/parse-md
+        :body
+        html/render)))
+
+(defn path->md [path]
+  (-> path
+      read-file
+      md->html))
+
+(defn render-content
+  ([path] (render-content path "content/"))
+  ([path root] (let [md (path->md (str root path))]
+                 (when (some? md)
+                   {:body   md
+                    :status 200}))))
