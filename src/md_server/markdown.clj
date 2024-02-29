@@ -16,14 +16,14 @@
         :body
         html/render)))
 
-(defn path->md [path]
+(defn path->html [path]
   (-> path
       read-file
       md->html))
 
 (defn render-content
   ([path] (render-content path "content/"))
-  ([path root] (let [md (path->md (str root path))]
+  ([path root] (let [md (path->html (str root path))]
                  (when (some? md)
                    {:body    md
                     :headers {"Content-Type" "text/html"}
