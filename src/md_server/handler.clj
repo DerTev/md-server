@@ -1,7 +1,8 @@
 (ns md-server.handler
   (:require [md-server.markdown :as md]
             [clojure.string :as cstr]
-            [md-server.sitemap :as sitemap])
+            [md-server.sitemap :as sitemap]
+            [ring.util.response :as ruresp])
   (:import java.io.File))
 
 (defn handle [req]
@@ -15,5 +16,6 @@
           (md/render-content (str uri "/index.md"))
           (when (cstr/ends-with? uri ".md")
             (md/render-content uri))
+          (ruresp/file-response uri {:root "content/"})
           {:body   "404 - Not found!"
            :status 404}))))
