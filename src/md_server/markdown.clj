@@ -1,7 +1,13 @@
 (ns md-server.markdown
   (:require [clojure.java.io :as jio]
             [cybermonday.core :as md]
-            [md-server.html :as html]))
+            [md-server.html :as html]
+            [clojure.string :as cstr]))
+
+(defn file-name [path]
+  (-> path
+      (cstr/split #"\\|/")
+      last))
 
 (defn- read-file [path]
   (let [file (jio/file path)]
@@ -9,17 +15,17 @@
                (.isFile file))
       (slurp file))))
 
-(defn md->html [markdown]
+(defn md->html [markdown title]
   (when (some? markdown)
     (-> markdown
         md/parse-md
         :body
-        html/render)))
+        (html/render title))))
 
 (defn path->html [path]
   (-> path
       read-file
-      md->html))
+      (md->html (file-name path))))
 
 (defn render-content
   ([path] (render-content path "content/"))

@@ -32,4 +32,5 @@
   (html/render (when (.isDirectory root)
                  (-> root
                      render-file
-                     second))))
+                     second))
+               "Sitemap"))
