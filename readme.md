@@ -1,11 +1,12 @@
-**We recommend using a [reversed proxy](https://www.ionos.de/digitalguide/server/knowhow/was-ist-ein-reverse-proxy/)!**
+# md-server
 
-# MD-Server
+*Serve markdown files with ease.*
 
-**MD-Server** is an easy to use Webserver inspirated by [BerndSchmecka](https://github.com/BerndSchmecka/md2html-fastcgi) and uses Markdown. It's written in Kotlin with [Ktor](https://github.com/ktorio/ktor) and use the [JetBrains MD-API](https://github.com/JetBrains/markdown).
+## Installation
 
-## Setup
-1. Download ``md-server-zip.zip`` from the latest release
-2. Run one of the executable files from the ``bin``-Folder (**Linux:** ``md-server``, **Windows:** ``md-server.bat``)
-3. Edit the config-Files
-4. There you go!
+1. Download the jar from the releases
+2. Run it
+3. Place your content into the ``content``-Folder
+4. Done!
+
+**We recommend to place md-server behind a [reverse proxy](https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/)!**
