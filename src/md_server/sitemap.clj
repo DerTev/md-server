@@ -3,7 +3,7 @@
             [clojure.string :as cstr])
   (:import java.io.File))
 
-(defn- adjust-path [^String path]
+(defn- adjust-file-path [^String path]
   (->> (cstr/split path #"\\|/")
        (drop 1)
        (cstr/join "/")))
@@ -11,19 +11,23 @@
 (defn- render-linked-file [^File file]
   [:a {:href (->> file
                   .getPath
-                  adjust-path
+                  adjust-file-path
                   (str "/"))}
    (.getName file)])
 
 (defn- index-file? [^File file]
   (= (.getName file) "index.md"))
 
+(defn- hidden-file? [^File file]
+  (.isHidden file))
+
 (defn- render-file [^File file]
   (if (.isDirectory file)
     (list (if (some index-file? (.listFiles file))
             (render-linked-file file)
             (.getName file))
-          [:ul (for [child-file (filter #(not (index-file? %))
+          [:ul (for [child-file (filter #(not (or (index-file? %)
+                                                  (hidden-file? %)))
                                         (.listFiles file))]
                  [:li (render-file child-file)])])
     (render-linked-file file)))

@@ -4,7 +4,7 @@
             [md-server.html :as html]
             [clojure.string :as cstr]))
 
-(defn file-name [path]
+(defn- file-name [path]
   (-> path
       (cstr/split #"\\|/")
       last))
@@ -15,14 +15,14 @@
                (.isFile file))
       (slurp file))))
 
-(defn md->html [markdown title]
+(defn- md->html [markdown title]
   (when (some? markdown)
     (-> markdown
         md/parse-md
         :body
         (html/render title))))
 
-(defn path->html [path]
+(defn- path->html [path]
   (-> path
       read-file
       (md->html (file-name path))))

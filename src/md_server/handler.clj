@@ -6,16 +6,20 @@
   (:import java.io.File))
 
 (defn handle [req]
-  (let [uri (:uri req)]
+  (let [uri (if (cstr/ends-with? (:uri req) "/")
+              (->> (:uri req)
+                   (drop-last 1)
+                   (apply str))
+              (:uri req))]
     (condp contains? uri
-      #{"/style.css"} {:body   (slurp "https://cdn.jsdelivr.net/npm/water.css@2/out/water.css")
-                       :status 200}
-      #{"/sitemap" "/sitemap/"} {:body   (sitemap/render (File. "content/"))
-                                 :status 404}
+      #{"/style.css"} (ruresp/response (slurp "https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"))
+      #{"/sitemap"} (->> "content/"
+                         (new File)
+                         sitemap/render
+                         ruresp/response)
       (or (md/render-content (str uri ".md"))
           (md/render-content (str uri "/index.md"))
           (when (cstr/ends-with? uri ".md")
             (md/render-content uri))
           (ruresp/file-response uri {:root "content/"})
-          {:body   "404 - Not found!"
-           :status 404}))))
+          (ruresp/not-found "404 - Not found!")))))
